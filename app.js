@@ -29,13 +29,25 @@ app.get('/', function(req, res) {
 
 app.get('/:id', function(req, res) {
    knex('pokemon')
+   .join('eyedees', 'eyedees.pokemon_id', '=', 'pokemon.id')
+   .join('types', 'types.id', '=', 'eyedees.type_id')
+   .where('pokemon.id', req.params.id)
+   .then(function (uniquePoke) {
+      var poke = uniquePoke[0]
+      var types = []
+      for (var i = 0; i < uniquePoke.length; i++) {
+         types.push(uniquePoke[i].type)
+      }
+      res.render('pokeProfile', poke)
+   })
+/*
    .select()
    .then(function (pokemon) {
       var uniquePoke = pokemon.filter(function (uniquePoke) {
          return uniquePoke.id === Number(req.params.id)
       })[0]
       res.render('pokeProfile', uniquePoke)
-   })
+*/
    .catch(function (err) {
       console.log(err)
    })

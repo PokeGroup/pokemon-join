@@ -1,3 +1,11 @@
 <a href='/'>Back</a><br />
-<img src='{{image}}' style='max-width:300px; max-height:300px' /><br />
-<h1>{{name}}</h1>
+<img src='{{pokeImage}}' style='max-width:200px; max-height:200px' /><br />
+<h1>{{pokeName}}</h1>
+{{#each type}}
+   <h3>{{this}}</h3>
+{{/each}}
+<ul>
+{{#each pokeRelativeName}}
+   <li>{{this}}</li>
+{{/each}}
+</ul>

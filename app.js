@@ -26,20 +26,34 @@ app.get('/', function(req, res) {
 			console.log(err)
 		})
 })
+function getPokesByType(typeId) {
 
+}
 app.get('/:id', function(req, res) {
    knex('pokemon')
    .join('eyedees', 'eyedees.pokemon_id', '=', 'pokemon.id')
    .join('types', 'types.id', '=', 'eyedees.type_id')
    .where('pokemon.id', req.params.id)
    .then(function (uniquePoke) {
-      var poke = uniquePoke[0]
+      console.log(uniquePoke)
       var types = []
+      var typeIds = []
       for (var i = 0; i < uniquePoke.length; i++) {
          types.push(uniquePoke[i].type)
+         typeIds.push(uniquePoke[i].type_id)
       }
-      res.render('pokeProfile', poke)
+      knex('eyedees')
+      .join('pokemon', 'pokemon.id', '=', 'eyedees.pokemon_id')
+      .where('eyedees.type_id', typeIds[0])
+      .then(function (pokeRelatives) {
+         var pokeRelativeNames = []
+         for (var i = 0; i < pokeRelatives.length; i++) {
+            pokeRelativeName.push(pokeRelatives[i].name)
+         }
+         res.render('pokeProfile', {pokeName: uniquePoke[0].name, pokeImage: uniquePoke[0].image, type: types, pokeRelativeName: pokeRelativeNames})
+      })
    })
+
 /*
    .select()
    .then(function (pokemon) {

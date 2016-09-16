@@ -3,6 +3,8 @@ var exphbs = require('express-handlebars')
 var nodemon = require('nodemon')
 var config = require('./knexfile').development
 var knex = require('knex')(config)
+var path = require('path')
+
 
 var app = express()
 
@@ -10,6 +12,9 @@ app.engine('handlebars', exphbs({
 	defaultLayout: 'main'
 }))
 app.set('view engine', 'handlebars')
+
+// serve the files in /public
+app.use(express.static(path.join(__dirname, 'public')))
 
 
 app.get('/', function(req, res) {

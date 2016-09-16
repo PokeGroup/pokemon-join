@@ -1,0 +1,43 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+html {
+  background: url("http://www.pixelstalk.net/wp-content/uploads/2016/03/Pokemon-waves-pikachu-surfing-HD-wallpaper.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+ul {
+  display: inline-block
+}
+
+#pokeTitle {
+  width: 25%;
+}
+
+#pokeList {
+  margin: 0 0 1.5em;
+  padding: 0;
+  counter-reset: item;
+}
+
+#pokeList > li {
+  margin: 0;
+  padding: 0 0 0 2em;
+  text-indent: -2em;
+  list-style-type: none;
+  counter-increment: item;
+}
+
+#pokeList > li:before {
+  display: inline-block;
+  width: 1em;
+  padding-right: 0.5em;
+  font-weight: bold;
+  text-align: right;
+  content: counter(item) ".";
+}

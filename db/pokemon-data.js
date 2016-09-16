@@ -63,7 +63,7 @@ module.exports = [
 		{name: 'Poliwrath', image: 'http://cdn.bulbagarden.net/upload/2/2d/062Poliwrath.png'}, // 62
 		{name: 'Abra', image: 'http://cdn.bulbagarden.net/upload/6/62/063Abra.png'}, // 63
 		{name: 'Kadabra', image: 'http://cdn.bulbagarden.net/upload/9/97/064Kadabra.png'}, // 64
-		{name: 'Alakazam', image: 'http://bulbapedia.bulbagarden.net/wiki/File:065Alakazam.png'}, // 65
+		{name: 'Alakazam', image: 'http://cdn.bulbagarden.net/upload/c/cc/065Alakazam.png'}, // 65
 		{name: 'Machop', image: 'http://cdn.bulbagarden.net/upload/8/85/066Machop.png'}, // 66
 		{name: 'Machoke', image: 'http://cdn.bulbagarden.net/upload/8/8e/067Machoke.png'}, // 67
 		{name: 'Machamp', image: 'http://cdn.bulbagarden.net/upload/8/8f/068Machamp.png'}, // 68

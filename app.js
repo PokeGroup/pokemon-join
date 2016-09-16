@@ -39,38 +39,35 @@ function getPoke(id) {
 }
 
 function getPokeByType(type) {
-
+   return knex('eyedees')
+   .join('pokemon', 'pokemon.id', '=', 'eyedees.pokemon_id')
+   .where('eyedees.type_id', type)
 }
 
 app.get('/:id', function(req, res) {
+   var unique, typeStrings
    getPoke(req.params.id)
    .then(function (uniquePoke) {
-      var types = uniquePoke[0].type
-      var typeIds = []
-      for (var i = 0; i < uniquePoke.length; i++) {
-         types.push(uniquePoke[i].type)
-         typeIds.push(uniquePoke[i].type_id)
-      }
-      knex('eyedees')
-      .join('pokemon', 'pokemon.id', '=', 'eyedees.pokemon_id')
-      .where('eyedees.type_id', typeIds[0])
-      .then(function (pokeRelatives) {
-         var pokeRelativeNames = []
-         for (var i = 0; i < pokeRelatives.length; i++) {
-            pokeRelativeName.push(pokeRelatives[i].name)
-         }
-         res.render('pokeProfile', {pokeName: uniquePoke[0].name, pokeImage: uniquePoke[0].image, type: types, pokeRelativeName: pokeRelativeNames})
+      unique = uniquePoke[0]
+      var typeIds = uniquePoke.map(function (obj) {
+         return obj.type_id
       })
+      typeStrings = uniquePoke.map(function (obj) {
+         return obj.type
+      })
+      var pokePromises = typeIds.map(getPokeByType)
+      return Promise.all(pokePromises)
    })
-
-/*
-   .select()
-   .then(function (pokemon) {
-      var uniquePoke = pokemon.filter(function (uniquePoke) {
-         return uniquePoke.id === Number(req.params.id)
-      })[0]
-      res.render('pokeProfile', uniquePoke)
-*/
+   .then(function (result) {
+      var pokeRelatives = result[0]
+      for (var i = 0; i < result.length - 1; i++) {
+         pokeRelatives = pokeRelatives.concat(result[i+1])
+      }
+      var pokeRelativeNames = pokeRelatives.map(function (obj) {
+         return obj.name
+      })
+      res.render('pokeProfile', {name: unique.name, image: unique.image, type: typeStrings, pokeRelativeName: pokeRelativeNames})
+   })
    .catch(function (err) {
       console.log(err)
    })
